@@ -1,41 +1,41 @@
 #include "main.h"
 
 /**
- * calculatePrecision - Determines the precision for printing
- * @formatString: Formatted string containing arguments
- * @currentIndex: Current index tracking the position in the format string
- * @argList: List of arguments
+ * get_precision - Calculates the precision for printing
+ * @format: Formatted string in which to print the arguments
+ * @i: List of arguments to be printed.
+ * @list: list of arguments.
  *
- * Returns: Precision specifier.
+ * Return: Precision.
  */
-int calculatePrecision(const char *formatString, int *currentIndex, va_list argList)
+int get_precision(const char *format, int *i, va_list list)
 {
-	int currentIdx = *currentIndex + 1;
+	int curr_i = *i + 1;
 	int precision = -1;
 
-	if (formatString[currentIdx] != '.')
-		return precision;
+	if (format[curr_i] != '.')
+		return (precision);
 
 	precision = 0;
 
-	for (currentIdx += 1; formatString[currentIdx] != '\0'; currentIdx++)
+	for (curr_i += 1; format[curr_i] != '\0'; curr_i++)
 	{
-		if (isDigit(formatString[currentIdx]))
+		if (is_digit(format[curr_i]))
 		{
 			precision *= 10;
-			precision += formatString[currentIdx] - '0';
+			precision += format[curr_i] - '0';
 		}
-		else if (formatString[currentIdx] == '*')
+		else if (format[curr_i] == '*')
 		{
-			currentIdx++;
-			precision = va_arg(argList, int);
+			curr_i++;
+			precision = va_arg(list, int);
 			break;
 		}
 		else
 			break;
 	}
 
-	*currentIndex = currentIdx - 1;
+	*i = curr_i - 1;
 
-	return precision;
+	return (precision);
 }
